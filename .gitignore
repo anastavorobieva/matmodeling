@@ -104,3 +104,83 @@ ggplot(iris,aes(x=Petal.Length, y=Sepal.Length, col=Species))+geom_point(alpha=0
 
 ##zad8
 tapply(diamonds$price[diamonds$price>1000],diamonds$clarity[diamonds$price>1000], mean)
+
+
+##zadanie9
+spirman <- функция(х, Г) {
+  если(длина(х)==Длина(м) && это.вектор(х)==истина && это.вектор(г)==правда){
+    п=1
+    н=длина(х)
+    ГХ=ранг(х)
+    ры=ранг(г)
+    для(я в 1:н)
+      {
+        п = п - ((( ГХ[я] - ры[я] )^2)*6)/(Н*(Н^2-1))
+      }
+  }
+  еще{
+    если(это.вектор(х)==истина && это.вектор(г)==истина)
+ печати("Ошибка. Вектора должны быть одинаковой длины")
+    еще
+ печати("Ошибка.Входные данные должны быть векторами")
+    п=-1
+  }
+  возвращение(п)
+}
+spirman(ирис$Чашелистик.Длина,ирис$лепесток.Длина)
+
+
+##zadanie10
+библиотека("nycflights13")
+библиотека("tidyr")
+библиотека("stringr")
+библиотека("dplyr")
+библиотека("tibble")
+библиотека("readr")
+тбл = read_csv("https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1", пропустить = 1, НС =с("","на","-9999","-9999.0"), комментарий=с("["))
+тбл = тбл[-1,]
+тбл
+представление(тбл)
+тбл = выберите(тбл, -(рулон))
+тбл = тбл %>% mutate_if(это.характер, фактор)
+#имена(тбл) = str_replace_all(имена(тбл), "[!]","_emph_")
+имена(тбл) = имена(тбл) %>% 
+ str_replace_all("[!]","_emph_") %>% 
+ str_replace_all("[?]","_quest_") %>% 
+ str_replace_all("[*]","_star_") %>% 
+ str_replace_all("[+]","_plus_") %>%
+ str_replace_all("[@]","_at_") %>%
+ str_replace_all("[-]","_minus_") %>%
+ str_replace_all("[$]","_dollar_") %>%
+ str_replace_all("[#]","_hash_") %>%
+ str_replace_all("[/]","_div_") %>%
+ str_replace_all("[%]","_perc_") %>%
+ str_replace_all("[&]","_amp_") %>%
+ str_replace_all("[\\^]","_power_") %>%
+ str_replace_all("[()]","_") 
+представление(тбл)
+поставка(тбл,является.числовые)
+tbl_numeric = тбл[,поставка(тбл,является.числовые)]
+tbl_non_numeric = тбл[,!поставка(тбл,является.числовые) ]
+tbl_numeric <- drop_na(tbl_numeric)
+имена(tbl_numeric)
+
+cor_td = кор(drop_na(tbl_numeric)) %>% качестве.данных.кадр %>% выберите(co2_flux)
+варс = строки.имена(cor_td)[cor_td$co2_flux^2 > .1] %>% на.исключить
+формула = как.формула(вставить("co2_flux~", "вставить" (варс,развал = "+"), сентября=""))
+формуле1 = как.формула(вставить("co2_flux", "вставить" (варс,развал = "+"), сентября=""))
+teaching_tbl = sample_n(тбл, пол(длина(тбл$Дата)*.7))
+testing_tbl = sample_n(тбл, пол(длина(тбл$Дата)*.3))
+tbl_numeric = фильтр(tbl_numeric, дой > 151)
+tbl_numeric = фильтр(tbl_numeric, дой < 243)
+мод = лм(co2_flux ~ (Тау+rand_err_Tau+ч+rand_err_H+Ле+qc_LE+rand_err_LE+co2_flux+h2o_flux+qc_h2o_flux+rand_err_h2o_flux+H_strg+co2_molar_density+h2o_time_lag+sonic_temperature+air_temperature+air_density+air_molar_volume+Эс+резус+ВПД+max_speed+u_star_+ТКЕ+T_star_+un_Tau+un_H+un_LE+un_co2_flux+un_h2o_flux+u_var+v_var+w_var+h2o_var+w_div_ts_cov+w_div_co2_cov+w_div_h2o_cov+СК)^2, данные = tbl_numeric)
+резюме(мод)
+регрес(мод)
+коэф(мод)
+имена(tbl_numeric)
+qplot(co2_flux, дой, данные = tbl_numeric, Альфа = я(1/10)) + theme_bw() + geom_line(УО(г = предсказать(мод)))
+qplot(co2_flux, прогнозировать(мод), данные = tbl_numeric, геом = "линии")
+qplot(скорость течения, co2_flux, данные = tbl_numeric, Альфа = я(1/10)) + theme_bw() + geom_line(УО(г = предсказать(мод)))
+
+
+## на большее не хватило сил(((( Прошу понять и простить)))))
